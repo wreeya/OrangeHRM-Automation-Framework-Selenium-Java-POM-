@@ -12,19 +12,20 @@ public class AddEmployeePage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Locators (based on your inspect)
     private By firstNameField = By.name("firstName");
     private By middleNameField = By.name("middleName");
-    private By lastNameField  = By.name("lastName");
-
+    private By lastNameField = By.name("lastName");
     private By employeeIdField = By.xpath("//label[text()='Employee Id']/following::input[1]");
-
-    private By saveButton   = By.xpath("//button[@type='submit' and .//text()='Save']");
-    private By cancelButton = By.xpath("//button[.//text()='Cancel']");
+    private By saveButton = By.xpath("//button[@type='submit']");
+    private By cancelButton = By.xpath("//button[contains(@class,'oxd-button--ghost')]");
 
     public AddEmployeePage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+    }
+
+    public void waitForAddEmployeePage() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(firstNameField));
     }
 
     public void enterFirstName(String firstName) {
@@ -51,5 +52,10 @@ public class AddEmployeePage {
 
     public void clickCancel() {
         wait.until(ExpectedConditions.elementToBeClickable(cancelButton)).click();
+    }
+
+    public void waitForPersonalDetailsPage() {
+        By personalDetailsHeader = By.xpath("//h6[normalize-space()='Personal Details']");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(personalDetailsHeader));
     }
 }

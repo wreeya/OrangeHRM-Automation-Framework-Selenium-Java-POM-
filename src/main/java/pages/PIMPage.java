@@ -12,21 +12,24 @@ public class PIMPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Locators
     private By pimMenu = By.xpath("//span[text()='PIM']");
-    private By addEmployeeButton = By.xpath("//a[text()='Add Employee']");
+    private By addEmployeeMenu = By.xpath("//a[normalize-space()='Add Employee']");
 
     public PIMPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
-    // Actions
     public void clickPIM() {
         wait.until(ExpectedConditions.elementToBeClickable(pimMenu)).click();
     }
 
     public void clickAddEmployee() {
-        wait.until(ExpectedConditions.elementToBeClickable(addEmployeeButton)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(addEmployeeMenu)).click();
+    }
+
+    public void openFirstEmployeeFromList() {
+        By firstEmployee = By.xpath("(//div[@class='oxd-table-cell oxd-padding-cell'])[2]");
+        driver.findElement(firstEmployee).click();
     }
 }

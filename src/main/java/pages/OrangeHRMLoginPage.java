@@ -2,36 +2,34 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class OrangeHRMLoginPage {
 
     private WebDriver driver;
+    private WebDriverWait wait;
 
-    // Locators for OrangeHRM Login Page
-    private By userNameField = By.name("username");
+    private By usernameField = By.name("username");
     private By passwordField = By.name("password");
     private By loginButton = By.xpath("//button[@type='submit']");
-    private By errorMessage = By.xpath("//p[contains(@class,'oxd-alert-content-text')]");
 
-    // Constructor
     public OrangeHRMLoginPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
-    // Actions
-    public void enterUsername(String username){
-        driver.findElement(userNameField).sendKeys(username);
+    public void enterUsername(String username) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField)).sendKeys(username);
     }
 
-    public void enterPassword(String password){
-        driver.findElement(passwordField).sendKeys(password);
+    public void enterPassword(String password) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField)).sendKeys(password);
     }
 
-    public void clickLoginButton(){
-        driver.findElement(loginButton).click();
-    }
-
-    public String errorMessageDisplay(){
-        return driver.findElement(errorMessage).getText();
+    public void clickLoginButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
     }
 }
